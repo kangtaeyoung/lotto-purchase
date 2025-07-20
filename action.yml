@@ -1,0 +1,18 @@
+name: 'Run Lotto Script'
+description: 'Runs the lotto-module script with user credentials'
+
+inputs:
+  count:
+    description: 'Number of lotto tickets to purchase'
+    required: false
+    default: '5'
+  id:
+    description: 'User ID for authentication'
+    required: true
+  pwd:
+    description: 'Password for authentication'
+    required: true
+
+runs:
+  using: 'node20'
+  main: 'index.js'

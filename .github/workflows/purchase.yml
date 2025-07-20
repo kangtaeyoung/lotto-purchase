@@ -1,0 +1,29 @@
+name: Lotto purchase (cron)
+on:
+  schedule:
+    # 매 주 일요일 오전 7시, Github Actions 에서는 UTC 기준으로 실행됨
+    # https://elmah.io/tools/cron-parser/
+    - cron: '0 22 * * 6'
+jobs:
+  run-purchase:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: |
+          corepack enable
+          pnpm install
+      - name: Purchase Lotto
+        id: purchase
+        uses: ./
+        with:
+          id: ${{ secrets.ID }}
+          pwd: ${{ secrets.PASSWORD }}
+      - uses: rich-automation/lotto-archive-action@latest
+        with:
+          numbersArray: ${{ steps.purchase.outputs.numbersArray }}
+          round: ${{ steps.purchase.outputs.round }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          debug: true
