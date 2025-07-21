@@ -39,15 +39,14 @@ const { chromium } = require('playwright');
     core.setOutput('numbersArray', JSON.stringify(numbersArray));
     core.setOutput('round', round);
  
-
-    const payload = {title: 'Hello World', body: 'Welcome to Node tutorial'};
-    const response = await fetch('https://hooks.slack.com/services/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', {
+ 
+    const response = await fetch('https://hooks.slack.com/services/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', {
       method: 'post',
       body: JSON.stringify({ "text": `로또 구매 완료 - 회차: ${round}, 번호: ${JSON.stringify(numbersArray)}`}),
       headers: {'Content-Type': 'application/json'}
     });
     const data = await response.json();
-    core.info(`Slack: ${JSON.stringify(data)}`);
+    core.info(`Slack: ${data}`);
     
   } catch (error) {
     core.setFailed(`Lotto purchase failed: ${error.message}`);
