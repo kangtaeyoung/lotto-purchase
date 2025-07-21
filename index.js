@@ -4,7 +4,7 @@ const { execSync } = require('child_process');
 const core = require('@actions/core');
 const { getNextLottoRound, LogLevel, LottoService } = require('@rich-automation/lotto');
 const { chromium } = require('playwright');
-const fetch = require('node-fetch');
+ 
 
 (async () => {
   let lottoService = null;
