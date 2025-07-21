@@ -5,7 +5,7 @@ inputs:
   count:
     description: 'Number of lotto tickets to purchase'
     required: false
-    default: '5'
+    default: '1'
   id:
     description: 'User ID for authentication'
     required: true
