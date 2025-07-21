@@ -28,7 +28,7 @@ const { chromium } = require('playwright');
       controller: chromium,
       logLevel: LogLevel.DEBUG,
     });
-    core.info('Signing in to the lotto service...');
+    core.info('Signing in to the lotto service...', id, pwd, round);
     await lottoService.signIn(id, pwd);
 
     core.info(`Purchasing ${count} lotto ticket(s) for round ${round}...`);
