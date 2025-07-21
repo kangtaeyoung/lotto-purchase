@@ -40,13 +40,13 @@ const { chromium } = require('playwright');
     core.setOutput('round', round);
  
  
-    const response = await fetch('https://hooks.slack.com/services/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', {
+    const response = await fetch('https://hooks.slack.com/services/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', {
       method: 'post',
       body: JSON.stringify({ "text": `로또 구매 완료 - 회차: ${round}, 번호: ${JSON.stringify(numbersArray)}`}),
       headers: {'Content-Type': 'application/json'}
     });
-    const data = await response.json();
-    core.info(`Slack: ${data}`);
+   // const data = await response.json();
+    core.info(`Slack: ${response.status}`);
     
   } catch (error) {
     core.setFailed(`Lotto purchase failed: ${error.message}`);
