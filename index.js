@@ -4,6 +4,7 @@ const { execSync } = require('child_process');
 const core = require('@actions/core');
 const { getNextLottoRound, LogLevel, LottoService } = require('@rich-automation/lotto');
 const { chromium } = require('playwright');
+const fetch = require('node-fetch');
 
 (async () => {
   let lottoService = null;
@@ -28,7 +29,7 @@ const { chromium } = require('playwright');
       controller: chromium,
       logLevel: LogLevel.DEBUG,
     });
-    core.info(`Signing in to the lotto service..., id: ${id}, pwd: ${pwd}, round: ${round}`);
+    core.info(`Signing in to the lotto service..., id: ${id}, pwd: ${pwd}, count: ${count}`);
     await lottoService.signIn(id, pwd);
 
     core.info(`Purchasing ${count} lotto ticket(s) for round ${round}...`);
@@ -37,6 +38,17 @@ const { chromium } = require('playwright');
     core.info('Lotto tickets purchased successfully.');
     core.setOutput('numbersArray', JSON.stringify(numbersArray));
     core.setOutput('round', round);
+ 
+
+    const payload = {title: 'Hello World', body: 'Welcome to Node tutorial'};
+    const response = await fetch('https://hooks.slack.com/services/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', {
+      method: 'post',
+      body: JSON.stringify({ "text": `로또 구매 완료 - 회차: ${round}, 번호: ${JSON.stringify(numbersArray)}`}),
+      headers: {'Content-Type': 'application/json'}
+    });
+    const data = await response.json();
+    core.info(`Slack: ${JSON.stringify(data)}`);
+    
   } catch (error) {
     core.setFailed(`Lotto purchase failed: ${error.message}`);
   } finally {
